@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: chat-pdf-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: chat_pdf_db
+      POSTGRES_USER: chatpdf
+      POSTGRES_PASSWORD: chatpdf123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chatpdf -d chat_pdf_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

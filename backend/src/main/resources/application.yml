@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: chat-with-pdf
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chat_pdf_db
+    username: chatpdf
+    password: chatpdf123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: llama3.2
+        options:
+          temperature: 0.7
+      embedding:
+        model: nomic-embed-text
+
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        index-type: hnsw
+        distance-type: cosine_distance
+        dimensions: 768
+
+server:
+  port: 8090
+
+app:
+  chunking:
+    chunk-size: 800
+    chunk-overlap: 200
+  ocr:
+    model: qwen2.5vl
